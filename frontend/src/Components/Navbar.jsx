@@ -1,27 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets'
+import { Link } from 'react-router-dom'
+import { StoreContext } from '../context/StoreContext'
 
-const Navbar = () => {
-    const [menu,setMenu] = useState("home")
-  return (
-    <div className='py-5 px-0 flex justify-between items-center '>
-        <img src={assets.logo} alt="" className='w-[150px]'/>
-        <ul className='flex list-none gap-5 text-[#49557e] text-[18px]'>
-            <li onClick={()=>setMenu("home")} className={`cursor-pointer ${menu==="home"?"pb-[2px] border-b-2 border-[#49557e]":""}`}>home</li>
-            <li onClick={()=>setMenu("menu")} className={`cursor-pointer ${menu==="menu"?"pb-[2px] border-b-2 border-[#49557e]":""}`}>menu</li>
-            <li onClick={()=>setMenu("mobile-app")} className={`cursor-pointer ${menu==="mobile-app"?"pb-[2px] border-b-2 border-[#49557e]":""}`}>mobile-app</li>
-            <li onClick={()=>setMenu("contact us")} className={`cursor-pointer ${menu==="contact us"?"pb-[2px] border-b-2 border-[#49557e]":""}`}>contact us</li>
-        </ul>
-        <div className='flex items-center gap-[40px]'>
-            <img src={assets.search_icon} alt="" />
-            <div className="relative">
-                <img src={assets.basket_icon} alt="" />
-                <div className='absolute min-w-[10px] min-h-[10px] bg-amber-600 rounded-[5px] top-[-8px] right-[-8px]'></div>
+const Navbar = ({ setShowLogin }) => {
+    const [menu, setMenu] = useState("home")
+
+    const {getTotalCartAmount} = useContext(StoreContext)
+    return (
+        <div className='py-5 px-0 flex justify-between items-center'>
+            <Link to={'/'}><img src={assets.logo2} alt="" className='w-[150px] max-[1050px]:w-[140px] max-[900px]:w-[120px]' /></Link>
+            <ul className='flex list-none gap-5 text-[#49557e] text-[18px]  max-[1050px]:gap-[20px] max-[1050px]:text-[17px] max-[900px]:gap-[15px] max-[900px]:text-[16px] max-[750px]:hidden'>
+                <Link to='/' onClick={() => setMenu("home")} className={`cursor-pointer ${menu === "home" ? "pb-[2px] border-b-2 border-[#49557e]" : ""}`}>home</Link>
+                <a href='#explore-menu' onClick={() => setMenu("menu")} className={`cursor-pointer ${menu === "menu" ? "pb-[2px] border-b-2 border-[#49557e]" : ""}`}>menu</a>
+                <a href='#app-download' onClick={() => setMenu("mobile-app")} className={`cursor-pointer ${menu === "mobile-app" ? "pb-[2px] border-b-2 border-[#49557e]" : ""}`}>mobile-app</a>
+                <a href='#footer' onClick={() => setMenu("contact us")} className={`cursor-pointer ${menu === "contact us" ? "pb-[2px] border-b-2 border-[#49557e]" : ""}`}>contact us</a>
+            </ul>
+            <div className='flex items-center gap-[40px] max-[1050px]:gap-[30px] max-[900px]:gap-[20px]'>
+                <img className='max-[1050px]:w-[22px] max-[900px]:w-[20px]' src={assets.search_icon} alt="" />
+                <div className="relative">
+                    <Link to={'/cart'}><img className='max-[1050px]:w-[22px] max-[900px]:w-[20px]' src={assets.basket_icon} alt="" /></Link>
+                    <div className={getTotalCartAmount()===0?"":'absolute min-w-[10px] min-h-[10px] bg-amber-600 rounded-[5px] top-[-8px] right-[-8px]'}></div>
+                </div>
+                <button onClick={() => setShowLogin(true)} className='bg-transparent text-base text-[#49557e] border-[1px] border-solid border-amber-600 py-[10px] px-[30px] rounded-[50px] cursor-pointer hover:bg-[#fff4f2] transition duration-300 max-[1050px]:py-[8px] max-[1050px]:px-[25px] max-[900px]:py-[7px] max-[900px]:px-[20px] max-[900px]:text-[15px]'>sign in</button>
             </div>
-            <button className='bg-transparent text-base text-[#49557e] border-[1px] border-solid border-amber-600 py-[10px] px-[30px] rounded-[50px] cursor-pointer hover:bg-[#fff4f2] transition duration-300'>sign in</button>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Navbar
