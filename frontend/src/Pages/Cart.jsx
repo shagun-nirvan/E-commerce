@@ -52,12 +52,12 @@ const Cart = () => {
             <hr className='my-[10px] mx-[0px]' />
             <div className="flex justify-between text-[#555]">
               <p>Delivery Fee</p>
-              <p>₹{50}</p>
+              <p>₹{getTotalCartAmount()===0?0:50}</p>
             </div>
             <hr className='my-[10px] mx-[0px]' />
             <div className="flex justify-between text-[#555] mb-[4px]">
               <b>Total</b>
-              <b>₹{getTotalCartAmount() + 50}</b>
+              <b>₹{getTotalCartAmount()===0?0:getTotalCartAmount() + 50}</b>
             </div>
           </div>
           <button onClick={() => navigate('/order')} className='border-none text-white bg-amber-600 w-[max(15vw,200px)] py-[12px] px-[0px] rounded-[4px] cursor-pointer'>PROCEED TO CHECKOUT</button>
